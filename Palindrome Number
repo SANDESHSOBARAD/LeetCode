@@ -1,0 +1,10 @@
+Given an integer x, return true if x is a palindrome, and false otherwise.
+
+class Solution:
+    def isPalindrome(self, x: int) -> bool:
+        xStr = str(x)
+        rev = str()
+        for i in xStr:
+            rev = i + rev
+        
+        return xStr == rev
