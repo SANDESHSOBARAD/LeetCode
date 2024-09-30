@@ -1,0 +1,37 @@
+Given the head of a singly linked list where elements are sorted in ascending order, convert it to a 
+height-balanced
+ binary search tree.
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def sortedListToBST(self, head: Optional[ListNode]) -> Optional[TreeNode]:
+        
+        def findMid(left, right):
+            slow = left
+            fast = left
+            while fast != right and fast.next != right:
+                slow = slow.next
+                fast = fast.next.next
+            return slow
+        
+        def converter(left, right):
+            if left == right:
+                return None
+            
+            mid = findMid(left, right)
+            node = TreeNode(mid.val)
+            node.left = converter(left, mid)
+            node.right = converter(mid.next, right)
+            return node
+        
+        return converter(head, None)
