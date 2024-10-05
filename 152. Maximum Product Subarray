@@ -1,0 +1,20 @@
+Given an integer array nums, find a 
+subarray
+ that has the largest product, and return the product.
+
+The test cases are generated so that the answer will fit in a 32-bit integer.
+
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+        
+        maxProduct = minProduct = result = nums[0]
+        for num in nums[1:]:
+            if num < 0:
+                maxProduct, minProduct = minProduct, maxProduct
+
+            maxProduct = max(num, maxProduct*num)
+            minProduct = min(num, minProduct*num)
+            result = max(result, maxProduct)
+        return result
