@@ -10,33 +10,43 @@ void remove(key) removes the key and its corresponding value if the map contains
 class MyHashMap:
 
     def __init__(self):
-        self.size = 100
-        self.data = [[] for _ in range(self.size)]
-        
+        self.size = 1000
+        self.buckets = [[] for _ in range(self.size)]
+    
     def hash(self, key):
         return key % self.size
-        
+
     def put(self, key: int, value: int) -> None:
-        idx = self.hash(key)
-        for pair in self.data[idx]:
-            if pair[0] == key:
-                pair[1] = value
+        index = self.hash(key)
+        bucket = self.buckets[index]
+        for i in range(len(bucket)):
+            k, v = bucket[i]
+            if k == key:
+                bucket[i] = (key, value)
                 return
-        self.data[idx].append([key, value])
-        
+
+        bucket.append((key, value))
 
     def get(self, key: int) -> int:
-        idx = self.hash(key)
-        for pair in self.data[idx]:
-            if pair[0] == key:
-                return pair[1]
+        index = self.hash(key)
+        bucket = self.buckets[index]
+        for i in range(len(bucket)):
+            k, v = bucket[i]
+            if k == key:
+                return v
         return -1
+        
 
     def remove(self, key: int) -> None:
-        idx = self.hash(key)        
-        for pair in self.data[idx]:
-            if pair[0] == key:
-                self.data[idx].remove(pair)
+        index = self.hash(key)
+        bucket = self.buckets[index]
+        for i in range(len(bucket)):
+            k, v = bucket[i]
+            if k == key:
+                del bucket[i]
+                return
+
+        
 
 
 # Your MyHashMap object will be instantiated and called as such:
