@@ -16,5 +16,5 @@ class Solution:
             if not p or not q: return False
 
             return (p.val == q.val and dfs(p.left, q.left) and dfs(p.right, q.right))
-        
         return dfs(p,q)
+        
