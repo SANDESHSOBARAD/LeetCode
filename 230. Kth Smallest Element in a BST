@@ -9,8 +9,8 @@ Given the root of a binary search tree, and an integer k, return the kth smalles
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
         res = []
-        
         def dfs(node):
             return dfs(node.left)+[node.val]+dfs(node.right) if node else []
         
         return dfs(root)[k-1]
+        
