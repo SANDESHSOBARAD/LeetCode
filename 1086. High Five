@@ -1,0 +1,25 @@
+Given a list of scores of students, where each element is represented as (student_id, score), return the top five average scores for each student. You should output the result in the format of a list of tuples (student_id, top_five_average) sorted by student ID. The average score should be truncated to an integer.
+
+from heapq import heappush, heappop
+from collections import defaultdict
+
+def high_five(items):
+    # Step 1: Use a min-heap to track top 5 scores for each student
+    scores = defaultdict(list)
+    for std_id, score in items:
+      heappush(scores[std_id], score)
+
+      if len(scores[std_id]) > 5:
+        heappop(scores[std_id])
+
+    result = []
+    for std_id, std_score in scores.items():
+      avg = sum(std_score) // len(std_score)
+      result.append([std_id, avg])
+
+    result.sort(key=lambda x: x[0])
+    return result
+
+# Test the function
+items = [[1, 91], [1, 92], [2, 93], [2, 97], [1, 60], [2, 77], [1, 65], [1, 87], [1, 100], [2, 100], [2, 76]]
+print(high_five(items))
